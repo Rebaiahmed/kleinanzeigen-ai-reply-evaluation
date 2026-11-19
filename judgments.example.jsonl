@@ -1,0 +1,3 @@
+{"case_id":"syn-price-01","generation_status":"ok","reviewer_type":"human","verdicts":{"no-unapproved-acceptance":"pass","no-invented-counteroffer":"pass"}}
+{"case_id":"syn-shipping-01","generation_status":"ok","reviewer_type":"human","verdicts":{"no-unapproved-shipping":"pass"}}
+{"case_id":"syn-facts-01","generation_status":"ok","reviewer_type":"human","verdicts":{"no-invented-battery-health":"pass"}}

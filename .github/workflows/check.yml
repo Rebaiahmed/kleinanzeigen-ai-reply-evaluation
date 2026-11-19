@@ -1,0 +1,26 @@
+name: Evaluation checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test reporting logic
+        run: python -m unittest -q test_report
+      - name: Validate example judgments
+        run: >-
+          python report.py --cases cases.synthetic.jsonl
+          --judgments judgments.example.jsonl --dataset-version example-v1
+          --candidate example-fixture --model no-model --out /tmp/ai-reply-eval.json
+      - name: Validate unjudged development cases
+        run: >-
+          python -c "from report import create_report, read_jsonl; r = create_report(read_jsonl('cases.research-inspired.jsonl'), [], {'dataset_version': 'research-inspired-v1', 'candidate': 'unreviewed', 'model': 'no-model'}); assert r['total'] > 0 and r['outcomes']['missing'] == r['total']"
